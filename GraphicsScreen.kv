@@ -1,0 +1,186 @@
+<FunctionRow>:
+    orientation: "horizontal"
+    padding: "8dp"
+    spacing: "8dp"
+    size_hint_y: None
+    height: "48dp"
+
+    MDLabel:
+        text: root.text
+        valign: "middle"
+
+    MDIconButton:
+        icon: "delete"
+        theme_icon_color: "Custom"
+        icon_color: 1, 0, 0, 1
+        on_release: app.root.ids.screen_manager.get_screen("graphics").remove_function(root.index)
+
+<GraphicsScreen>:
+    name: "graphics"
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: "20dp"
+        spacing: "16dp"
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            spacing: "16dp"
+            size_hint_y: None
+            height: "56dp"
+
+            MDTextField:
+                id: function_input
+                mode: "outlined"
+                size_hint_x: 0.7
+
+                MDTextFieldLeadingIcon:
+                    icon: "function"
+
+                MDTextFieldHintText:
+                    text: "(x)"
+
+            MDButton:
+                style: "tonal"
+                size_hint_x: 0.3
+                on_release: root.add_function()
+
+                MDButtonIcon:
+                    icon: "plus"
+
+                MDButtonText:
+                    text: "Add"
+
+        MDCard:
+            elevation: 2
+            padding: "8dp"
+            size_hint_y: 0.6
+
+            RecycleView:
+                id: functions_rv
+                viewclass: "FunctionRow"
+
+                RecycleBoxLayout:
+                    default_size: None, "48dp"
+                    default_size_hint: 1, None
+                    size_hint_y: None
+                    height: self.minimum_height
+                    orientation: "vertical"
+
+        MDBoxLayout:
+            orientation: "vertical"
+            spacing: "12dp"
+            size_hint_y: None
+            height: self.minimum_height
+
+            MDLabel:
+                text: "Coordinates"
+                bold: True
+                size_hint_y: None
+                height: "24dp"
+
+            MDBoxLayout:
+                spacing: "8dp"
+                size_hint_y: None
+                height: "48dp"
+
+                MDTextField:
+                    id: x_min
+                    mode: "outlined"
+
+                    MDTextFieldHintText:
+                        text: "x min"
+
+                MDTextField:
+                    id: x_max
+                    mode: "outlined"
+
+                    MDTextFieldHintText:
+                        text: "x max"
+
+            MDBoxLayout:
+                spacing: "8dp"
+                size_hint_y: None
+                height: "48dp"
+
+                MDTextField:
+                    id: y_min
+                    mode: "outlined"
+                    MDTextFieldHintText:
+                        text: "y min"
+
+                MDTextField:
+                    id: y_max
+                    mode: "outlined"
+                    MDTextFieldHintText:
+                        text: "y max"
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "56dp"
+            spacing: dp(8)
+
+            MDButton:
+                on_release: root.go_to_graph()
+                style: "outlined"
+                theme_width: "Custom"
+                height: "56dp"
+                size_hint_x: .5
+
+                MDButtonIcon:
+                    x: text.x - (self.width + dp(10))
+                    icon: "sine-wave"
+
+                MDButtonText:
+                    id: text
+                    text: "Graph it"
+                    pos_hint: {"center_x": .5, "center_y": .5}
+
+            MDButton:  # Toggle Deg/Rad
+                on_release: deg_rad_text.text = "Rad." if deg_rad_text.text == "Deg." else "Deg."
+                id: deg_rad_button
+                variant: "filled"
+                size_hint_x: .2
+                MDButtonText:
+                    id: deg_rad_text
+                    text: "Deg."
+                    halign: "center"
+
+        MDBoxLayout:
+            orientation: "horizontal"
+            size_hint_y: None
+            height: "56dp"
+
+            MDIconButton:
+                on_release: app.go_back()
+                icon: "keyboard-return"
+
+
+<GraphScreen>:
+    name: "graph"
+
+    MDBoxLayout:
+        md_bg_color: app.theme_cls.backgroundColor
+        orientation: "vertical"
+        padding: "16dp"
+        spacing: "8dp"
+
+        # Barra superior
+        MDBoxLayout:
+            size_hint_y: None
+            height: "48dp"
+
+            MDLabel:
+                text: "Graphic"
+                bold: True
+
+            Widget:
+            MDIconButton:
+                icon: "close"
+                on_release: app.root.ids.screen_manager.current = "graphics"
+
+        # Contenedor del gráfico con overlay
+        FloatLayout:
+            id: graph_container

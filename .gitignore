@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+
+# Entornos virtuales
+.venv/
+.env/
+kivy_env/
+
+# Buildozer / Android
+.buildozer/
+bin/
+*.apk
+*.aab
+
+# IDEs
+.vscode/
+.idea/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
