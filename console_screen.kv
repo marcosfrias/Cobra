@@ -1,0 +1,40 @@
+<ConsoleScreen>:
+    name: "console"
+    md_bg_color: app.theme_cls.backgroundColor
+    MDBoxLayout:
+        orientation: "vertical"
+        padding: "8dp"
+        spacing: "8dp"
+
+        ScrollView:
+            do_scroll_x: False
+
+            MDLabel:
+                id: output
+                text: ">>> "
+                size_hint_y: None
+                height: self.texture_size[1]
+                text_size: self.width, None
+                valign: "top"
+                halign: "left"
+
+
+        MDBoxLayout:
+            size_hint_y: None
+            height: "56dp"
+            spacing: "8dp"
+            adaptive_height: True
+
+            MDTextField:
+                id: input
+                multiline: True
+                mode: "outlined"
+                size_hint_y: None
+                MDTextFieldHintText:
+                    text: ">>> Python Code"
+
+            MDIconButton:
+                icon: "play"
+                on_release:
+                    root.ejecutar(input.text)
+                    input.text = ""

@@ -1,0 +1,120 @@
+<ConsoleHelpScreen>:
+    name: "console_help"
+    md_bg_color: app.theme_cls.backgroundColor
+
+    MDScrollView:
+        do_scroll_x: False
+
+        MDBoxLayout:
+            id: main_scroll
+            orientation: "vertical"
+            adaptive_height: True
+
+            MDLabel:
+                text: "Useful Commands and Libraries"
+
+            MDListItem:
+
+                MDListItemLeadingIcon:
+                    icon: "folder"
+
+                MDListItemHeadlineText:
+                    text: "math"
+
+                MDListItemSupportingText:
+                    text: "Mathematical Functions"
+
+            MDListItem:
+
+                MDListItemLeadingIcon:
+                    icon: "folder"
+
+                MDListItemHeadlineText:
+                    text: "numpy (np)"
+
+                MDListItemSupportingText:
+                    text: "Arrays and Numerical Calculations"
+
+            MDListItem:
+
+                MDListItemLeadingIcon:
+                    icon: "console"
+
+                MDListItemHeadlineText:
+                    text: "dir(app)"
+
+                MDListItemSupportingText:
+                    text: "Show the app object attributes"
+
+            MDListItem:
+
+                MDListItemLeadingIcon:
+                    icon: "console"
+
+                MDListItemHeadlineText:
+                    text: "sm.current"
+
+                MDListItemSupportingText:
+                    text: "sm.current = 'home': back to Home"
+
+            MDListItem:
+
+                MDListItemLeadingIcon:
+                    icon: "console"
+
+                MDListItemHeadlineText:
+                    text: "change background"
+
+                MDListItemSupportingText:
+                    text: "set_bg('images/fnd.png')"
+                MDListItemTertiaryText:
+                    text: "list_bg()"
+
+            MDListItem:
+
+                MDListItemLeadingIcon:
+                    icon: "console"
+
+                MDListItemHeadlineText:
+                    text: "change settings background"
+
+                MDListItemSupportingText:
+                    text: "home_bg.keep_ratio = False"
+
+                MDListItemTertiaryText:
+                    text: "home_bg.allow_stretch = True"
+
+            MDListItem:
+
+                MDListItemLeadingIcon:
+                    icon: "console"
+
+                MDListItemHeadlineText:
+                    text: "change settings background"
+
+                MDListItemSupportingText:
+                    text: "home_bg.size_hint = (0.8, 0.8)"
+
+                MDListItemTertiaryText:
+                    text: "home_bg.pos_hint = {'center_x': 0.5, 'center_y': 0.5}"
+
+
+            MDListItem:
+
+                MDListItemLeadingIcon:
+                    icon: "console"
+
+                MDListItemHeadlineText:
+                    text: "Save settings background"
+
+                MDListItemSupportingText:
+                    text: "save_home_bg_settings()"
+
+    MDBoxLayout:
+        orientation: "horizontal"
+        size_hint_y: None
+        height: "56dp"
+
+        MDIconButton:
+            on_release: app.go_back()
+            icon: "keyboard-return"
