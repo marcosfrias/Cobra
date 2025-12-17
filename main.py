@@ -16,6 +16,8 @@ from graphics_screen import GraphicsScreen, GraphScreen
 from console_screen import ConsoleScreen
 from console_help import ConsoleHelpScreen
 
+Window.softinput_mode = "below_target"
+
 KV = '''
 <CommonNavigationRailItem>
     MDNavigationRailItemIcon:
