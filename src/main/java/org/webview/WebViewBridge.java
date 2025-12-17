@@ -17,7 +17,7 @@ public class WebViewBridge {
     /**
      * Mostrar PDF dentro de PDF.js
      */
-    public static void showPDF(String pdfPath) {
+    public static void showPDF(String pdfPath, boolean isAsset) {
         PythonActivity activity = PythonActivity.mActivity;
 
         activity.runOnUiThread(() -> {
@@ -58,10 +58,16 @@ public class WebViewBridge {
                 activity.addContentView(webView, params);
             }
 
-            // Cargar PDF usando PDF.js
             String viewer = "file:///android_asset/pdfjs/web/viewer.html";
-            String encoded = Uri.encode(pdfPath);
-            String url = viewer + "?file=" + encoded;
+            String url;
+
+            if (isAsset) {
+                // PDF interno (snake)
+                url = viewer + "?file=/android_asset/pdfjs/web/" + pdfPath;
+            } else {
+                // PDF del usuario
+                url = viewer + "?file=file://" + pdfPath;
+            }
 
             webView.loadUrl(url);
             webView.setVisibility(WebView.VISIBLE);

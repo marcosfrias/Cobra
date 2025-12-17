@@ -16,8 +16,6 @@ from graphics_screen import GraphicsScreen, GraphScreen
 from console_screen import ConsoleScreen
 from console_help import ConsoleHelpScreen
 
-Window.softinput_mode = "below_target"
-
 KV = '''
 <CommonNavigationRailItem>
     MDNavigationRailItemIcon:
@@ -102,7 +100,11 @@ MDNavigationLayout:
                                     icon: "snake"
                                     pos_hint: {"center_x": .5}
                                     icon_color: "green"
-                                
+                                    on_release: app.open_ippython_pdf()
+                                    
+                                MDIconButton:
+                                    icon: "account"
+                                    pos_hint: {"center_x": .5}
 
                 Widget: 
                     size_hint_x: 1                    
@@ -275,5 +277,10 @@ class Home(MDApp):
 
     def go_back(self):
         self.root.ids.screen_manager.current = "home"
+
+    def open_ippython_pdf(self):
+        screen = self.root.ids.screen_manager.get_screen("reader")
+        screen.open_pdf_direct("ippython.pdf")
+
 
 Home().run()

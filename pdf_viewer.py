@@ -34,10 +34,12 @@ REQUEST_PICK_PDF = 1001
 
 
 class PDFViewerScreen(MDScreen):
+
     def on_enter(self):
         # Bind solo cuando el screen está activo
         if ANDROID:
             activity.bind(on_activity_result=self.on_result)
+
 
     def switch_to_home(self):
         if self.manager:
@@ -64,7 +66,7 @@ class PDFViewerScreen(MDScreen):
 
         uri = data.getData()
         pdf_path = self.copy_pdf_from_uri(uri)
-        WebViewBridge.showPDF(pdf_path)
+        WebViewBridge.showPDF(pdf_path, False)
 
     def copy_pdf_from_uri(self, uri):
         if ANDROID:
@@ -77,14 +79,21 @@ class PDFViewerScreen(MDScreen):
             )
 
             with open(output_path, "wb") as f:
-                buffer = bytearray(1024)
+                buffer = bytearray(4096)
                 n = input_stream.read(buffer)
-                while n != -1:
-                    f.write(bytes(buffer[:n]))
+                while n > 0:
+                    f.write(buffer[:n])
                     n = input_stream.read(buffer)
 
             input_stream.close()
-            return "file://" + output_path
+            return output_path
 
         print("[TEST MODE] copy_pdf_from_uri llamado")
         return "/path/to/fake.pdf"
+
+    def open_pdf_direct(self, filename):
+        if ANDROID:
+            WebViewBridge.showPDF(filename, True)
+        else:
+            print(f"[TEST MODE] Abrir PDF interno: {filename}")
+

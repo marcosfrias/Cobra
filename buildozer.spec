@@ -13,7 +13,7 @@ package.domain = org.webview
 source.dir = .
 
 # (list) Source files to include (let empty to include all the files)
-source.include_exts = py,png,svg,jpg,jpeg,kv,atlas,html,js,css,json,ttf
+source.include_exts = py,png,svg,jpg,jpeg,kv,atlas,html,js,css,json,ttf,pdf
 
 # (list) List of inclusions using pattern matching
 source.include_patterns = images/*.png, images/*.jpg, images/*.jpeg
