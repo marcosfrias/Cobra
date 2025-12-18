@@ -65,11 +65,7 @@ class ConsoleScreen(MDScreen):
 
         if self.store.exists("home_bg_settings"):
             settings = self.store.get("home_bg_settings")
-            home_bg = self.context["home_bg"]
-            home_bg.keep_ratio = settings.get("keep_ratio", True)
-            home_bg.allow_stretch = settings.get("allow_stretch", True)
-            home_bg.size_hint = tuple(settings.get("size_hint", [1, 1]))
-            home_bg.pos_hint = settings.get("pos_hint", {"center_x": 0.5, "center_y": 0.5})
+            app.home_bg_settings.update(settings)
 
         # Prompt inicial
         self.ids.output.text = (
@@ -150,8 +146,7 @@ class ConsoleScreen(MDScreen):
             return
 
         settings = {
-            "keep_ratio": home_bg.keep_ratio,
-            "allow_stretch": home_bg.allow_stretch,
+            "fit_mode": home_bg.fit_mode,
             "size_hint": list(home_bg.size_hint),
             "pos_hint": home_bg.pos_hint,
         }
@@ -159,9 +154,9 @@ class ConsoleScreen(MDScreen):
 
         # Actualizar variable global de la app
         app = MDApp.get_running_app()
-        app.home_bg_settings = settings
+        app.home_bg_settings.update(settings)
 
-        print("Configuración de home_bg guardada")
+        print(" home_bg saved")
 
 
 

@@ -1,7 +1,7 @@
 import os
 
 from kivy.lang import Builder
-from kivy.properties import StringProperty, ColorProperty
+from kivy.properties import StringProperty, ColorProperty, DictProperty
 from kivy.properties import ObjectProperty
 from kivy.storage.jsonstore import JsonStore
 from kivy.core.window import Window
@@ -39,9 +39,8 @@ MDNavigationLayout:
                 id: home_bg
                 texture: app.bg_texture
                 size_hint: app.home_bg_settings["size_hint"]
-                keep_ratio: app.home_bg_settings["keep_ratio"]
-                allow_stretch: app.home_bg_settings["allow_stretch"]
                 pos_hint: app.home_bg_settings["pos_hint"]
+                fit_mode: app.home_bg_settings["fit_mode"]
 
             MDBoxLayout:
                 orientation: "horizontal"
@@ -168,6 +167,11 @@ class CommonNavigationRailItem(MDNavigationRailItem):
 
 class Home(MDApp):
     bg_texture = ObjectProperty(None)
+    home_bg_settings = DictProperty({
+        "fit_mode": "contain",  # valor por defecto
+        "size_hint": [1, 1],
+        "pos_hint": {"center_x": 0.5, "center_y": 0.5},
+    })
     def build(self):
         self.theme_cls.theme_style = "Dark"
         self.theme_cls.primary_palette = "Green"
@@ -177,10 +181,6 @@ class Home(MDApp):
 
         # Valores por defecto
         bg_file = "fnd.png"
-        keep_ratio = True
-        allow_stretch = True
-        size_hint = (1, 1)
-        pos_hint = {"center_x": 0.5, "center_y": 0.5}
 
         # Si hay fondo guardado
         if self.store.exists("background"):
@@ -189,25 +189,13 @@ class Home(MDApp):
         # Si hay home_bg_settings guardado
         if self.store.exists("home_bg_settings"):
             settings = self.store.get("home_bg_settings")
-            keep_ratio = settings.get("keep_ratio", True)
-            allow_stretch = settings.get("allow_stretch", True)
-            size_hint = tuple(settings.get("size_hint", [1, 1]))
-            pos_hint = settings.get("pos_hint", {"center_x": 0.5, "center_y": 0.5})
+            self.home_bg_settings.update(settings)
 
-        # Guardar en la app para usar en KV
-        self.home_bg_settings = {
-            "keep_ratio": keep_ratio,
-            "allow_stretch": allow_stretch,
-            "size_hint": size_hint,
-            "pos_hint": pos_hint
-        }
 
         # Textura del fondo
         path = os.path.join("images", bg_file)
-        if os.path.exists(path):
-            self.bg_texture = CoreImage(path).texture
-        else:
-            self.bg_texture = CoreImage("images/fnd.png").texture
+        self.bg_texture = CoreImage(path).texture
+
 
 
         Builder.load_file("GraphicsScreen.kv")
